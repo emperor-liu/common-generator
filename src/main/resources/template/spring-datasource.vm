@@ -1,0 +1,55 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+		>
+		
+	<aop:aspectj-autoproxy proxy-target-class="true" />	
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations"  value="classpath:datasource.properties" />
+	</bean>
+	<!-- 数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">   
+    	<property name="driverClassName"><value>${database.driver}</value></property>   
+  		<property name="url"><value>${database.url}</value></property>   
+    	<property name="username"><value>${database.username}</value></property>  
+        <property name="password"><value>${database.password}</value></property>  
+        <property name="maxActive"><value>${database.maxActive}</value></property>  
+        <property name="initialSize"><value>${database.initialSize}</value></property>  
+        <property name="maxWait"><value>${database.maxWait}</value></property>  
+        <property name="maxIdle"><value>${database.maxIdle}</value></property>  
+        <property name="minIdle"><value>${database.minIdle}</value></property>  
+        <property name="removeAbandoned"><value>${database.removeAbandoned}</value></property>  
+        <property name="removeAbandonedTimeout"><value>${database.removeAbandonedTimeout}</value></property>  
+        <property name="connectionProperties"><value>${database.connectionProperties}</value></property>
+	</bean>
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- MyBatis -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:${xmlPackage}/mapper/*.xml" />
+	</bean>
+	<!--MapperScannerConfigurer配置-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--basePackage指定要扫描的包，在此包之下的映射器都会被 搜索到。可指定多个包，包与包之间用逗号或分号分隔-->
+		<property name="basePackage" value="${daoPackage}.dao"/>
+	</bean>
+	
+</beans>

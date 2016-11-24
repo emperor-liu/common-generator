@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${daoPackage}.${daoName}">
+
+	<resultMap id="BaseResultMap" type="${voPackage}.${voName}">
+${resultMapContent}
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+    	${fields}
+  	</sql>
+	<select id="findByPrimaryKey" resultMap="BaseResultMap" parameterType="java.io.Serializable">
+		select
+		<include refid="Base_Column_List" />
+		from ${tableName}
+		where
+		${keyField} = #{${key}}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from ${tableName}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.io.Serializable">
+		delete from ${tableName}
+		where
+		${keyField} = #{${key}}
+	</delete>
+
+	<delete id="deleteAll">
+		delete from ${tableName}
+	</delete>
+
+	<insert id="create" parameterType="${voPackage}.${voName}" useGeneratedKeys="true" keyProperty="${key}">
+		insert into ${tableName} (<include refid="Base_Column_List" />)
+		values (
+${insertContent}
+		)
+	<!--<selectKey resultType="String" order="AFTER" keyProperty="${key}"> 
+			SELECT LAST_INSERT_ID() 
+		</selectKey>  -->	
+	</insert>
+	
+		<insert id="save" parameterType="${voPackage}.${voName}" keyProperty="${key}">
+		insert into ${tableName} (<include refid="Base_Column_List" />)
+		values (
+${insertContent}
+		)
+	</insert>
+		
+	<update id="update" parameterType="${voPackage}.${voName}">
+	  update ${tableName}
+	  <set>
+	  ${updateContent}
+	    where
+		${keyField} = #{${key}}
+	  </set>	
+	</update>
+
+
+	<select id="getTotal"  resultType="java.lang.Integer">
+	  SELECT COUNT(*) FROM ${tableName}
+	</select>
+	
+	<delete id="deleteList" parameterType="java.util.List">
+	   delete ${tableName}  WHERE ${keyField} IN
+		<foreach collection="list" index="index" item="sn" open="(" separator="," close=")">
+			#{sn}
+		</foreach>
+    </delete>
+    
+    <select id="findByPrimaryKeyPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+		
+		<![CDATA[ ]]>
+		SELECT 
+		 <include refid="Base_Column_List" />
+		FROM
+		${tableName}
+		order by 
+		${keyField}
+		desc
+		limit
+		#{startIndex} ,#{pageSize}
+		
+		
+	</select>
+	<!--codegen -->
+
+</mapper>

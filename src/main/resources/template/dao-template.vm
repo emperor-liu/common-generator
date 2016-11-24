@@ -1,0 +1,37 @@
+package ${daoPackage};
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import ${voPackage}.${voName};
+
+public interface ${daoName} {
+
+	public ${voName} findByPrimaryKey(Serializable primaryKey);
+
+	public List<${voName}> findAll();
+	
+	public List<${voName}> findByPrimaryKeyPage(Map<String,Integer> map);
+
+	public void create(${voName} po);
+	
+	public void save(${voName} po);
+
+	public void update(${voName} po);
+
+	public void deleteByPrimaryKey(Serializable PrimaryKey);
+
+	public void deleteAll();
+	
+    public int getTotal();
+	
+	public void deleteList(List<Serializable> list);
+
+	/** codegen **/
+}
