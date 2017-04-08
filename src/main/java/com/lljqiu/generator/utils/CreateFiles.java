@@ -85,7 +85,7 @@ public class CreateFiles {
             contextMap.put(VM_Model.fieldsContent.name(), createBean.getFieldsContent());
             contextMap
                     .put(VM_Model.getterSetterContent.name(), createBean.getGetterSetterContent());
-            String path = getFillePath(createBean)+ "do/"+createBean.getFileName() +"DO.java";
+            String path = getFillePath(createBean)+ "dataobject/"+createBean.getFileName() +"DO.java";
             createFile(path, ReadTemplateUtils.VM_MODEL_TEMPLATE, contextMap);
             log.debug("create vobean name 【{}】 SUCCESS", createBean.getFileName());
         } catch (Exception e) {

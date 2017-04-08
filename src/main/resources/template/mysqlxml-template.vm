@@ -66,7 +66,7 @@ ${insertContent}
 	</select>
 	
 	<delete id="deleteList" parameterType="java.util.List">
-	   delete ${tableName}  WHERE ${keyField} IN
+	   delete from ${tableName}  WHERE ${keyField} IN
 		<foreach collection="list" index="index" item="sn" open="(" separator="," close=")">
 			#{sn}
 		</foreach>

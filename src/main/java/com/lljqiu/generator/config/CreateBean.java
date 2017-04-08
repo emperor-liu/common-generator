@@ -82,10 +82,10 @@ public class CreateBean implements Serializable {
             tmp = new StringBuffer();
             field = fields.get(i);
             updateRowContent = getUpdateRowContent(field);
-            if(i == 1){
+            if(i == fields.size()-1){
                 tmp.append(updateRowContent + "\n");
             } else {
-                tmp.append(","+updateRowContent + "\n");
+                tmp.append(updateRowContent + ",\n");
             }
             updateRowContent = getUpdateIf(tmp.toString(), field);
             buffer.append(updateRowContent);

@@ -66,7 +66,7 @@ public class SourceConfig implements Serializable {
             throw new DMException("db config is null");
         }
         if(dbType.equalsIgnoreCase("oracle")){
-            DMException.checkCondition(StringUtils.isBlank(sequenceName), "sequenceName not bull");
+            DMException.checkCondition(StringUtils.isBlank(sequenceName), "sequenceName not null");
         }
         this.dateSourceUrl = dateSourceUrl;
         this.username = userName;
@@ -78,7 +78,7 @@ public class SourceConfig implements Serializable {
         }
         this.fileMapperPath = filePackage + ".mapper";
         this.fileDaoPackage = filePackage + ".dao";
-        this.fileVoPackage = filePackage + ".do";
+        this.fileVoPackage = filePackage + ".dataobject";
         this.filePackage = filePackage;
         this.sequenceName = sequenceName;
         this.tableList = tableList;
