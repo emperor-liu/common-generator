@@ -203,7 +203,7 @@ public class CreateFiles {
      * @param createBean
      * @throws Exception
      * @return String
-     * @author name：liujie <br>email: jie_liu1@asdc.com.cn
+     * @author name：liujie <br>email: liujie@lljqiu.com
      **/
     private static String getFillePath(CreateBean createBean) throws Exception {
         String path = null;
